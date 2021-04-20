@@ -90,6 +90,8 @@ class MainUI():
         del_model_button = Button(text="Edit workout", width='30', command=self.edit_workout)
         del_model_button.pack()
 
+        self.__root.mainloop()
+
     def add_sneaker_todb(self):
         if self.__sneakername.get() != "":
             messagebox.showinfo("Message", self.__db.CreateNewSneaker(self.__sneakername.get()))
@@ -112,7 +114,7 @@ class MainUI():
                 type = 'Run'
             messagebox.showinfo("Message", self.__db.CreateNewWorkout(self.__sneakername.get(), (self.__dateworkout.get(), type, self.__distance.get())))
         else:
-            messagebox.showinfo("Message", "Input a value into [Sneaker model] and [Date of workout] and [Distance] entry")
+            messagebox.showinfo("Message", "Input a value into [Sneaker model] and [Date of workout] and [Distance] entrys")
 
     def edit_workout(self):
         if self.__sneakername.get() != "" and self.__dateworkout.get() != "" and self.__distance.get() != "":
@@ -124,7 +126,7 @@ class MainUI():
                     type = 'Run'
                 messagebox.showinfo("Message", self.__db.EditWorkout(self.__sneakername.get(), (self.__dateworkout.get(), type, self.__distance.get())))
         else:
-            messagebox.showinfo("Message", "Input a value into [Sneaker model] and [Date of workout] and [Distance] entry")
+            messagebox.showinfo("Message", "Input a value into [Sneaker model] and [Date of workout] and [Distance] entrys")
     
     def CSVtoDB(self):
         if self.__sneakername.get() != "":
@@ -173,12 +175,12 @@ class MainUI():
                 walkkm = round(df[df.Type == 'Walk']['Distance'].sum(), 2)
                 runkm = round(df[df.Type == 'Run']['Distance'].sum(), 2)
                 totalkm = round(df['Distance'].sum(), 2)
-                maxkmwalk = df[df.Type == 'Walk']['Distance'].max()
                 maxkmrun = df[df.Type == 'Run']['Distance'].max()
-                maxdatwalk = list(df[df.Distance == maxkmwalk]['Date'])
+                minkmrun = df[df.Type == 'Run']['Distance'].min()
                 maxdatrun = list(df[df.Distance == maxkmrun]['Date'])
+                mindatrun = list(df[df.Distance == minkmrun]['Date'])
                 messagebox.showinfo("Statistics for sneaker", "Sum km for walk: " + str(walkkm) + "\n" + "Sum km for run: " + str(runkm) + "\n" + "Total km: " + str(totalkm) +
-                "\n\n" + "Max km per workout for walk: " + str(maxkmwalk) + " at: \n" + str(maxdatwalk) + "\n\n" + "Max km per workout for run: " + str(maxkmrun) + " at: \n" + str(maxdatrun))
+                "\n\n" + "Max km per workout for run: " + str(maxkmrun) + " at: \n" + str(maxdatrun) + "\n\n" + "Min km per workout for run: " + str(minkmrun) + " at: \n" + str(mindatrun))
             else:
                 messagebox.showinfo("Message", "No such sneaker in DB")
         else:
@@ -196,7 +198,6 @@ class MainUI():
 def main(dbname: str):
     root = Tk()  
     ui = MainUI(root, dbname)
-    root.mainloop()
 
 if __name__=="__main__":
     main('SneakersWorkouts.db')
