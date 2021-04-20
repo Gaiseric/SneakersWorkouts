@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog as fd 
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 class MainUI():
@@ -144,39 +145,42 @@ class MainUI():
     def show_walk(self):
         if self.__sneakername.get() != "":
             df = self.__db.PrintWorkoutsForSneaker(self.__sneakername.get())
-            if df is Exception:
-                messagebox.showinfo("Message", "Uncorrect input")
-            df.set_index("Date", inplace=True)
-            df[df.Type == 'Walk']['Distance'].plot(kind="area")
-            plt.show()
+            if type(df) is pd.DataFrame:
+                df.set_index("Date", inplace=True)
+                df[df.Type == 'Walk']['Distance'].plot()
+                plt.show()
+            else:
+                messagebox.showinfo("Message", "No such sneaker in DB")
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
     def show_run(self):
         if self.__sneakername.get() != "":
             df = self.__db.PrintWorkoutsForSneaker(self.__sneakername.get())
-            if df is Exception:
-                messagebox.showinfo("Message", "Uncorrect input")
-            df.set_index("Date", inplace=True)
-            df[df.Type == 'Run']['Distance'].plot(kind="area")
-            plt.show()
+            if type(df) is pd.DataFrame:
+                df.set_index("Date", inplace=True)
+                df[df.Type == 'Run']['Distance'].plot()
+                plt.show()
+            else:
+                messagebox.showinfo("Message", "No such sneaker in DB")
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
     def show_statistics(self):
         if self.__sneakername.get() != "":
             df = self.__db.PrintWorkoutsForSneaker(self.__sneakername.get())
-            if df is Exception:
-                messagebox.showinfo("Message", "Uncorrect input")
-            walkkm = round(df[df.Type == 'Walk']['Distance'].sum(), 2)
-            runkm = round(df[df.Type == 'Run']['Distance'].sum(), 2)
-            totalkm = round(df['Distance'].sum(), 2)
-            maxkmwalk = df[df.Type == 'Walk']['Distance'].max()
-            maxkmrun = df[df.Type == 'Run']['Distance'].max()
-            maxdatwalk = list(df[df.Distance == maxkmwalk]['Date'])
-            maxdatrun = list(df[df.Distance == maxkmrun]['Date'])
-            messagebox.showinfo("Statistics for sneaker", "Sum km for walk: " + str(walkkm) + "\n" + "Sum km for run: " + str(runkm) + "\n" + "Total km: " + str(totalkm) +
-            "\n\n" + "Max km per workout for walk: " + str(maxkmwalk) + " at: \n" + str(maxdatwalk) + "\n\n" + "Max km per workout for run: " + str(maxkmrun) + " at: \n" + str(maxdatrun))
+            if type(df) is pd.DataFrame:
+                walkkm = round(df[df.Type == 'Walk']['Distance'].sum(), 2)
+                runkm = round(df[df.Type == 'Run']['Distance'].sum(), 2)
+                totalkm = round(df['Distance'].sum(), 2)
+                maxkmwalk = df[df.Type == 'Walk']['Distance'].max()
+                maxkmrun = df[df.Type == 'Run']['Distance'].max()
+                maxdatwalk = list(df[df.Distance == maxkmwalk]['Date'])
+                maxdatrun = list(df[df.Distance == maxkmrun]['Date'])
+                messagebox.showinfo("Statistics for sneaker", "Sum km for walk: " + str(walkkm) + "\n" + "Sum km for run: " + str(runkm) + "\n" + "Total km: " + str(totalkm) +
+                "\n\n" + "Max km per workout for walk: " + str(maxkmwalk) + " at: \n" + str(maxdatwalk) + "\n\n" + "Max km per workout for run: " + str(maxkmrun) + " at: \n" + str(maxdatrun))
+            else:
+                messagebox.showinfo("Message", "No such sneaker in DB")
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
