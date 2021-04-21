@@ -65,6 +65,15 @@ class DBManager:
         except Exception as e:
             return e
 
+    def AddWorkoutsToXLSX(self, sneakername, filename):
+        try:   
+            str = "SELECT * FROM " + sneakername
+            df = pd.read_sql(str, self.__con)
+            df.to_excel(filename, index=False)
+            return 'File saved successfull'
+        except Exception as e:
+            return e
+
     def DeleteSneaker(self, sneakername):
         try:
             str = "DROP TABLE " + sneakername
