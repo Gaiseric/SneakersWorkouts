@@ -94,15 +94,34 @@ class DBManager:
                     cnt = True
             if cnt == False:
                 raise Exception('No such workout')
-            str = "UPDATE " + sneakername + " SET Date=?, Type=?, Distance=? WHERE Date = " + values[0] + " AND Type = '" + values[1] +"'" 
+            str = "UPDATE " + sneakername + " SET Distance=? WHERE Date=? AND Type=?"
+            data = (values[2], values[0], values[1])
+            self.__cur.execute(str, data)
+            self.__con.commit()
+            return 'Workout updated successfull'
+        except Exception as e:
+            return e
+
+    def DeleteWorkout(self, sneakername, values):
+        tmp = (values[0], values[1])
+        try:
+            str = "SELECT Date, Type FROM " + sneakername
+            self.__cur.execute(str)
+            cnt = False
+            for row in self.__cur:
+                if tmp == row:
+                    cnt = True
+            if cnt == False:
+                raise Exception('No such workout')
+            str = "DELETE FROM " + sneakername + " WHERE Date=? AND Type=? AND Distance=?"
             self.__cur.execute(str, values)
             self.__con.commit()
-            return 'Workouts updated successfull'
+            return 'Workout deleted successfull'
         except Exception as e:
             return e    
 
     def PrintWorkoutsForSneaker(self, sneakername):
-        try:   
+        try: 
             str = "SELECT * FROM " + sneakername
             df = pd.read_sql(str, self.__con)
             return df
