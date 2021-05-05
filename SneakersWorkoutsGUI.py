@@ -211,8 +211,8 @@ class MainUI():
             if type(df) is pd.DataFrame and df.empty != True:
                 df.Date = pd.to_datetime(df.Date, dayfirst=True)
                 df.set_index("Date", inplace=True)
-                df[df.Type == 'Run']['Distance'].plot(label="Run")
-                df[df.Type == 'Walk']['Distance'].plot(label="Walk")
+                df[df.Type == 'Run']['Distance'].plot(marker='o', linestyle='--', label="Run")
+                df[df.Type == 'Walk']['Distance'].plot(marker='o', linestyle='--', label="Walk")
                 plt.xlabel('Dates of workouts', fontsize=12, fontweight="bold")
                 plt.ylabel('Distance in km', fontsize=12, fontweight="bold")
                 plt.legend()
