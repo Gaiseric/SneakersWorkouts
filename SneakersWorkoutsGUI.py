@@ -40,6 +40,8 @@ class MainUI():
         print_menu.add_command(label="Show ratio chart", command=self.show_ratio)
         print_menu.add_command(label="Show intensity chart", command=self.show_inten)
         print_menu.add_command(label="Show statistics", command=self.show_statistics)
+        print_menu.add_separator()
+        print_menu.add_command(label="List of sneakers in DB", command = self.list_of_sneakers)
 
         about_menu = Menu(tearoff=0)
         about_menu.add_command(label="Help", command=self.help)
@@ -242,6 +244,13 @@ class MainUI():
                 messagebox.showinfo("Message", "No such sneaker in DB or absent workouts for him")
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
+
+    def list_of_sneakers(self):
+        lst = self.__db.PrintSneakersNames()
+        if lst:
+            messagebox.showinfo("Sneakers in DB", "\n".join(str(name)[2:-3] for name in lst))
+        else:
+            messagebox.showinfo("Message", "No sneakers in DB")
 
     def help(self):
         mes = "How to use:\n\nTo add/delete sneaker specify name at [Sneaker model] entry;\n\nTo add/delete/edit workout for sneaker specify sneaker name at[Sneaker model], specify [Date of workout] and [Distance] entries and choise [Type] of workout as Walk/Run;\n\nTo watch statistics for sneaker specify its name at [Sneaker model] entry and choise appropriate item in [Show] menu;\n\nTo operate with CSV and XLSX files choise appropriate item in [File] menu.\n\nInput values format:\n\n[Sneaker model] format: from 3 to 25 symbols, first letter, only letters and numbers allowed;\n\n[Date of workout] format: string like dd.mm.yy;\n\n[Distance] format: float as ddd.dd from 0.00 to 999.99"

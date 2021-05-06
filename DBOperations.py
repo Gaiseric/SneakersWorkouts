@@ -127,3 +127,14 @@ class DBManager:
             return df
         except Exception as e:
             return e
+
+    def PrintSneakersNames(self):
+        try:
+            str = "SELECT name FROM sqlite_master WHERE type='table'"
+            res = self.__con.execute(str)
+            lst = []
+            for name in res:
+                lst.append(name)
+            return lst
+        except Exception as e:
+            return e
