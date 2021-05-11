@@ -1,3 +1,4 @@
+from numpy import NaN
 from DBOperations import DBManager
 from tkinter import *
 from tkinter import messagebox
@@ -238,8 +239,20 @@ class MainUI():
                 minkmrun = df[df.Type == 'Run']['Distance'].min()
                 maxdatrun = list(df[df.Distance == maxkmrun]['Date'])
                 mindatrun = list(df[df.Distance == minkmrun]['Date'])
-                messagebox.showinfo("Statistics for sneaker", "Sum km for walk: " + str(walkkm) + "\n" + "Sum km for run: " + str(runkm) + "\n" + "Total km: " + str(totalkm) +
-                "\n\n" + "Max km per workout for run: " + str(maxkmrun) + " at: \n" + str(maxdatrun) + "\n\n" + "Min km per workout for run: " + str(minkmrun) + " at: \n" + str(mindatrun))
+                if maxkmrun is not NaN and minkmrun is not NaN:
+                    runstat = "Max km per workout for run: " + str(maxkmrun) + " at: \n" + str(maxdatrun) + "\n\n" + "Min km per workout for run: " + str(minkmrun) + " at: \n" + str(mindatrun) + "\n\n"
+                else:
+                    runstat = "No run workouts for this sneaker\n\n"
+                maxkmwalk = df[df.Type == 'Walk']['Distance'].max()
+                minkmwalk = df[df.Type == 'Walk']['Distance'].min()
+                maxdatwalk = list(df[df.Distance == maxkmwalk]['Date'])
+                mindatwalk = list(df[df.Distance == minkmwalk]['Date'])
+                if maxkmwalk is not NaN and minkmwalk is not NaN:
+                    walkstat = "Max km per workout for walk: " + str(maxkmwalk) + " at: \n" + str(maxdatwalk) + "\n\n" + "Min km per workout for walk: " + str(minkmwalk) + " at: \n" + str(mindatwalk)
+                else:
+                    walkstat = "No walk workouts for this sneaker"
+                sumstat = "Sum km for walk: " + str(walkkm) + "\n" + "Sum km for run: " + str(runkm) + "\n" + "Total km: " + str(totalkm) + "\n\n"
+                messagebox.showinfo("Statistics for sneaker", sumstat + runstat + walkstat)
             else:
                 messagebox.showinfo("Message", "No such sneaker in DB or absent workouts for him")
         else:

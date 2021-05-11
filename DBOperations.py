@@ -1,7 +1,6 @@
 import csv
 import sqlite3 as sql
 import pandas as pd
-import matplotlib.pyplot as plt
 
 class DBManager:
     
