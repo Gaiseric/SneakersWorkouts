@@ -186,7 +186,6 @@ class MainUI():
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
-
     def show_ratio(self):
         if self.__sneakername.get() != "":
             df = self.__db.PrintWorkoutsForSneaker(self.__sneakername.get())
