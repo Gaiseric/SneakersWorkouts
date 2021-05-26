@@ -13,7 +13,6 @@ class DBManager:
         self.__con = sql.connect(self.__dbname)
         self.__cur = self.__con.cursor()
 
-
     def CloseConnection(self):
         self.__con.close()
 
