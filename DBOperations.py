@@ -9,14 +9,14 @@ class DBManager:
         self.__con = None
         self.__cur = None
 
-    def SetConnection(self):
+    def set_connection(self):
         self.__con = sql.connect(self.__dbname)
         self.__cur = self.__con.cursor()
 
-    def CloseConnection(self):
+    def close_connection(self):
         self.__con.close()
 
-    def CreateNewSneaker(self, sneakername):
+    def create_new_sneaker(self, sneakername):
         try:
             str = "CREATE TABLE " + sneakername + " (Date text, Type text, Distance real)"
             self.__cur.execute(str)
@@ -25,7 +25,7 @@ class DBManager:
         except Exception as e:
             return e
 
-    def CreateNewWorkout(self, sneakername, values):
+    def create_new_workout(self, sneakername, values):
         tmp = (values[0], values[1])
         try:
             str = "SELECT Date, Type FROM " + sneakername
@@ -40,7 +40,7 @@ class DBManager:
         except Exception as e:
             return e
 
-    def AddWorkoutsFromCSV(self, sneakername, filename):
+    def add_workouts_from_csv(self, sneakername, filename):
         workouts_list = []
         try:
             with open(filename, "r", newline="") as file:
@@ -54,7 +54,7 @@ class DBManager:
         except Exception as e:
             return e
     
-    def AddWorkoutsToCSV(self, sneakername, filename):
+    def add_workouts_to_csv(self, sneakername, filename):
         try:   
             str = "SELECT * FROM " + sneakername
             df = pd.read_sql(str, self.__con)
@@ -63,7 +63,7 @@ class DBManager:
         except Exception as e:
             return e
 
-    def AddWorkoutsToXLSX(self, sneakername, filename):
+    def add_workouts_to_xlsx(self, sneakername, filename):
         try:   
             str = "SELECT * FROM " + sneakername
             df = pd.read_sql(str, self.__con)
@@ -72,7 +72,7 @@ class DBManager:
         except Exception as e:
             return e
 
-    def DeleteSneaker(self, sneakername):
+    def delete_sneaker(self, sneakername):
         try:
             str = "DROP TABLE " + sneakername
             self.__cur.execute(str)
@@ -81,7 +81,7 @@ class DBManager:
         except Exception as e:
             return e        
 
-    def EditWorkout(self, sneakername, values):
+    def edit_workout(self, sneakername, values):
         tmp = (values[0], values[1])
         try:
             str = "SELECT Date, Type FROM " + sneakername
@@ -100,7 +100,7 @@ class DBManager:
         except Exception as e:
             return e
 
-    def DeleteWorkout(self, sneakername, values):
+    def delete_workout(self, sneakername, values):
         tmp = (values[0], values[1])
         try:
             str = "SELECT Date, Type FROM " + sneakername
@@ -118,7 +118,7 @@ class DBManager:
         except Exception as e:
             return e    
 
-    def PrintWorkoutsForSneaker(self, sneakername):
+    def print_workouts_for_sneaker(self, sneakername):
         try: 
             str = "SELECT * FROM " + sneakername
             df = pd.read_sql(str, self.__con)
@@ -126,7 +126,7 @@ class DBManager:
         except Exception as e:
             return e
 
-    def PrintSneakersNames(self):
+    def print_sneakers_names(self):
         try:
             str = "SELECT name FROM sqlite_master WHERE type='table'"
             res = self.__con.execute(str)

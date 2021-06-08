@@ -19,7 +19,7 @@ class MainUI():
         self.__db = DBManager(dbname)
     
     def initUI(self):
-        self.__db.SetConnection()
+        self.__db.set_connection()
         self.__choise.set(1)
         self.__root.title('SneakersWorkouts')
         self.__root.resizable(width=False, height=False)
@@ -104,7 +104,7 @@ class MainUI():
             if re.fullmatch(r"^[a-zA-Z][a-zA-Z0-9]{2,24}", self.__sneakername.get()) == None:
                 messagebox.showinfo("Message", "Value of [Sneaker model] entry is not acceptable. See help.")
             else:
-                messagebox.showinfo("Message", self.__db.CreateNewSneaker(self.__sneakername.get()))
+                messagebox.showinfo("Message", self.__db.create_new_sneaker(self.__sneakername.get()))
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
@@ -114,13 +114,13 @@ class MainUI():
                 messagebox.showinfo("Message", "Value of [Sneaker model] entry is not acceptable. See help.")
             else:
                 if messagebox.askokcancel("Warning!!!", "This action also will delete all workouts for selected sneaker. Are you sure?"):
-                    messagebox.showinfo("Message", self.__db.DeleteSneaker(self.__sneakername.get()))
+                    messagebox.showinfo("Message", self.__db.delete_sneaker(self.__sneakername.get()))
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
     def add_workout_todb(self):
         if self.__sneakername.get() != "" and self.__dateworkout.get() != "" and self.__distance.get() != "":
-            if re.fullmatch(r"^[a-zA-Z][a-zA-Z0-9]{2,24}", self.__sneakername.get()) == None or re.fullmatch(r"([0][1-9]|[1][0-9]|[2][0-9]|[3][0-1])[.]([0][1-9]|[1][0-2])[.][0-9][0-9]", self.__dateworkout.get()) == None or re.fullmatch(r"([1-9]|[1-9][0-9]|[1][0-9][0-9])[.][0-9][0-9]", self.__distance.get()) == None:
+            if re.fullmatch(r"^[a-zA-Z][a-zA-Z0-9]{2,24}", self.__sneakername.get()) == None or re.fullmatch(r"([0][1-9]|[1][0-9]|[2][0-9]|[3][0-1])[.]([0][1-9]|[1][0-2])[.][0-9][0-9]", self.__dateworkout.get()) == None or re.fullmatch(r"([0-9]|[1-9][0-9]|[1][0-9][0-9])[.][0-9][0-9]", self.__distance.get()) == None:
                 messagebox.showinfo("Message", "Value of [Sneaker model] or [Date of workout] or [Distance] entries are not acceptable. See help.")
             else:
                 type = None
@@ -128,13 +128,13 @@ class MainUI():
                     type = 'Walk'
                 elif self.__choise.get() ==2:
                     type = 'Run'
-                messagebox.showinfo("Message", self.__db.CreateNewWorkout(self.__sneakername.get(), (self.__dateworkout.get(), type, self.__distance.get())))
+                messagebox.showinfo("Message", self.__db.create_new_workout(self.__sneakername.get(), (self.__dateworkout.get(), type, self.__distance.get())))
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] and [Date of workout] and [Distance] entries")
 
     def edit_workout(self):
         if self.__sneakername.get() != "" and self.__dateworkout.get() != "" and self.__distance.get() != "":
-            if re.fullmatch(r"^[a-zA-Z][a-zA-Z0-9]{2,24}", self.__sneakername.get()) == None or re.fullmatch(r"([0][1-9]|[1][0-9]|[2][0-9]|[3][0-1])[.]([0][1-9]|[1][0-2])[.][0-9][0-9]", self.__dateworkout.get()) == None or re.fullmatch(r"([1-9]|[1-9][0-9]|[1][0-9][0-9])[.][0-9][0-9]", self.__distance.get()) == None:
+            if re.fullmatch(r"^[a-zA-Z][a-zA-Z0-9]{2,24}", self.__sneakername.get()) == None or re.fullmatch(r"([0][1-9]|[1][0-9]|[2][0-9]|[3][0-1])[.]([0][1-9]|[1][0-2])[.][0-9][0-9]", self.__dateworkout.get()) == None or re.fullmatch(r"([0-9]|[1-9][0-9]|[1][0-9][0-9])[.][0-9][0-9]", self.__distance.get()) == None:
                 messagebox.showinfo("Message", "Value of [Sneaker model] or [Date of workout] or [Distance] entries are not acceptable. See help.")
             else:
                 if messagebox.askokcancel("Warning!!!", "Do you really want to make a change to workout?"):
@@ -143,13 +143,13 @@ class MainUI():
                         type = 'Walk'
                     elif self.__choise.get() ==2:
                         type = 'Run'
-                    messagebox.showinfo("Message", self.__db.EditWorkout(self.__sneakername.get(), (self.__dateworkout.get(), type, self.__distance.get())))
+                    messagebox.showinfo("Message", self.__db.edit_workout(self.__sneakername.get(), (self.__dateworkout.get(), type, self.__distance.get())))
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] and [Date of workout] and [Distance] entries")
     
     def del_workout_fromdb(self):
         if self.__sneakername.get() != "" and self.__dateworkout.get() != "" and self.__distance.get() != "":
-            if re.fullmatch(r"^[a-zA-Z][a-zA-Z0-9]{2,24}", self.__sneakername.get()) == None or re.fullmatch(r"([0][1-9]|[1][0-9]|[2][0-9]|[3][0-1])[.]([0][1-9]|[1][0-2])[.][0-9][0-9]", self.__dateworkout.get()) == None or re.fullmatch(r"([1-9]|[1-9][0-9]|[1][0-9][0-9])[.][0-9][0-9]", self.__distance.get()) == None:
+            if re.fullmatch(r"^[a-zA-Z][a-zA-Z0-9]{2,24}", self.__sneakername.get()) == None or re.fullmatch(r"([0][1-9]|[1][0-9]|[2][0-9]|[3][0-1])[.]([0][1-9]|[1][0-2])[.][0-9][0-9]", self.__dateworkout.get()) == None or re.fullmatch(r"([0-9]|[1-9][0-9]|[1][0-9][0-9])[.][0-9][0-9]", self.__distance.get()) == None:
                 messagebox.showinfo("Message", "Value of [Sneaker model] or [Date of workout] or [Distance] entries are not acceptable. See help.")
             else:
                 if messagebox.askokcancel("Warning!!!", "Do you really want delete workout?"):
@@ -158,7 +158,7 @@ class MainUI():
                         type = 'Walk'
                     elif self.__choise.get() ==2:
                         type = 'Run'
-                    messagebox.showinfo("Message", self.__db.DeleteWorkout(self.__sneakername.get(), (self.__dateworkout.get(), type, self.__distance.get())))
+                    messagebox.showinfo("Message", self.__db.delete_workout(self.__sneakername.get(), (self.__dateworkout.get(), type, self.__distance.get())))
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] and [Date of workout] and [Distance] entries")
 
@@ -166,7 +166,7 @@ class MainUI():
         if self.__sneakername.get() != "":
             filename = fd.askopenfilename(filetypes = (("CSV files","*.csv"),("all files","*.*")))
             if filename != "":
-                messagebox.showinfo("Message", self.__db.AddWorkoutsFromCSV(self.__sneakername.get(), filename))
+                messagebox.showinfo("Message", self.__db.add_workouts_from_csv(self.__sneakername.get(), filename))
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
@@ -174,7 +174,7 @@ class MainUI():
         if self.__sneakername.get() != "":
             filename = fd.asksaveasfilename(defaultextension=".csv", filetypes = (("CSV files","*.csv"),("all files","*.*")))
             if filename != "":
-                messagebox.showinfo("Message", self.__db.AddWorkoutsToCSV(self.__sneakername.get(), filename))
+                messagebox.showinfo("Message", self.__db.add_workouts_to_csv(self.__sneakername.get(), filename))
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
@@ -182,13 +182,13 @@ class MainUI():
         if self.__sneakername.get() != "":
             filename = fd.asksaveasfilename(defaultextension=".xlsx", filetypes = (("XLSX files","*.xlsx"),("all files","*.*")))
             if filename != "":
-                messagebox.showinfo("Message", self.__db.AddWorkoutsToXLSX(self.__sneakername.get(), filename))
+                messagebox.showinfo("Message", self.__db.add_workouts_to_xlsx(self.__sneakername.get(), filename))
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
     def show_ratio(self):
         if self.__sneakername.get() != "":
-            df = self.__db.PrintWorkoutsForSneaker(self.__sneakername.get())
+            df = self.__db.print_workouts_for_sneaker(self.__sneakername.get())
             if type(df) is pd.DataFrame and df.empty != True:
                 walkkm = round(df[df.Type == 'Walk']['Distance'].sum(), 2)
                 runkm = round(df[df.Type == 'Run']['Distance'].sum(), 2)
@@ -208,7 +208,7 @@ class MainUI():
 
     def show_inten(self):
         if self.__sneakername.get() != "":
-            df = self.__db.PrintWorkoutsForSneaker(self.__sneakername.get())
+            df = self.__db.print_workouts_for_sneaker(self.__sneakername.get())
             if type(df) is pd.DataFrame and df.empty != True:
                 df.Date = pd.to_datetime(df.Date, dayfirst=True)
                 df.set_index("Date", inplace=True)
@@ -228,7 +228,7 @@ class MainUI():
 
     def show_statistics(self):
         if self.__sneakername.get() != "":
-            df = self.__db.PrintWorkoutsForSneaker(self.__sneakername.get())
+            df = self.__db.print_workouts_for_sneaker(self.__sneakername.get())
             if type(df) is pd.DataFrame and df.empty != True:
                 walkkm = round(df[df.Type == 'Walk']['Distance'].sum(), 2)
                 runkm = round(df[df.Type == 'Run']['Distance'].sum(), 2)
@@ -257,7 +257,7 @@ class MainUI():
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
     def list_of_sneakers(self):
-        lst = self.__db.PrintSneakersNames()
+        lst = self.__db.print_sneakers_names()
         if lst:
             messagebox.showinfo("Sneakers in DB", "\n".join(str(name)[2:-3] for name in lst))
         else:
@@ -269,7 +269,7 @@ class MainUI():
 
     def on_closing(self):
         if messagebox.askokcancel("Quit", "Do you want to quit?"):
-            self.__db.CloseConnection()
+            self.__db.close_connection()
             self.__root.destroy()
 
 def main(dbname: str):
