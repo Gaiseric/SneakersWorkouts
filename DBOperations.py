@@ -1,6 +1,6 @@
 import csv
-import sqlite3 as sql
 import pandas as pd
+import sqlite3 as sql
 
 class DBManager:
     

@@ -1,11 +1,12 @@
-from numpy import NaN
-from DBOperations import DBManager
+import re
 from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog as fd 
-import matplotlib.pyplot as plt
+from numpy import NaN
 import pandas as pd
-import re
+import matplotlib.pyplot as plt
+from DBOperations import DBManager
+
 
 
 class MainUI():
@@ -30,9 +31,9 @@ class MainUI():
         main_menu = Menu()
 
         file_menu = Menu(tearoff=0)
-        file_menu.add_command(label="Add to DB from CSV file", command=self.CSVtoDB)
-        file_menu.add_command(label="Write from DB to CSV file", command=self.DBtoCSV)
-        file_menu.add_command(label="Write from DB to XLSX file", command=self.DBtoXLSX)
+        file_menu.add_command(label="Add to DB from CSV file", command=self.csv_to_db)
+        file_menu.add_command(label="Write from DB to CSV file", command=self.db_to_csv)
+        file_menu.add_command(label="Write from DB to XLSX file", command=self.db_to_xlsx)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command = self.on_closing) 
 
@@ -162,7 +163,7 @@ class MainUI():
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] and [Date of workout] and [Distance] entries")
 
-    def CSVtoDB(self):
+    def csv_to_db(self):
         if self.__sneakername.get() != "":
             filename = fd.askopenfilename(filetypes = (("CSV files","*.csv"),("all files","*.*")))
             if filename != "":
@@ -170,7 +171,7 @@ class MainUI():
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
-    def DBtoCSV(self):
+    def db_to_csv(self):
         if self.__sneakername.get() != "":
             filename = fd.asksaveasfilename(defaultextension=".csv", filetypes = (("CSV files","*.csv"),("all files","*.*")))
             if filename != "":
@@ -178,7 +179,7 @@ class MainUI():
         else:
             messagebox.showinfo("Message", "Input a value into [Sneaker model] entry")
 
-    def DBtoXLSX(self):
+    def db_to_xlsx(self):
         if self.__sneakername.get() != "":
             filename = fd.asksaveasfilename(defaultextension=".xlsx", filetypes = (("XLSX files","*.xlsx"),("all files","*.*")))
             if filename != "":
